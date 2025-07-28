@@ -46,7 +46,8 @@ public class ModuleIOSparkMax implements ModuleIO {
     this.moduleIdx = index;
     steerMotor = new SimpleSparkMax(SwerveConstants.kSwerveUtilInstance.kSteerMotorIds[index]);
     driveMotor = new SimpleSparkMax(SwerveConstants.kSwerveUtilInstance.kDriveMotorIds[index]);
-    cancoder = new CANcoder(SwerveConstants.kSwerveUtilInstance.kCancoderIds[index].getDeviceNumber());
+    cancoder =
+        new CANcoder(SwerveConstants.kSwerveUtilInstance.kCancoderIds[index].getDeviceNumber());
 
     steerMotor.apply(SwerveConstants.kSteerMotorConfiguration);
     driveMotor.apply(SwerveConstants.kDriveMotorConfiguration);

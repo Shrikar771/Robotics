@@ -36,7 +36,7 @@ import team5427.lib.motors.SteelTalonFX;
  */
 public class Robot extends LoggedRobot {
   private SteelTalonFX steelTalon1;
-  //Create new steeltalonfx
+  // Create new steeltalonfx
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
@@ -51,10 +51,8 @@ public class Robot extends LoggedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  
   @SuppressWarnings("resource")
   public Robot() {
-  
 
     Logger.recordMetadata("Reefscape", "Steel Talons 5427 Robot Code for the Game Reefscape, 2025");
     Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
@@ -92,8 +90,6 @@ public class Robot extends LoggedRobot {
         Logger.setReplaySource(new WPILOGReader(logPath));
         Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
         break;
-      
-      
     }
     AutoLogOutputManager.addPackage("team5427.lib");
 
@@ -105,10 +101,8 @@ public class Robot extends LoggedRobot {
     AdjustedParabolicThread.getInstance().setShouldCompute(true);
     AdjustedParabolicThread.getInstance().start();
     steelTalon1 = new SteelTalonFX(Constants.kFlyWheelMotorCanId);
-    //define new rookie steeltalonfx
+    // define new rookie steeltalonfx
   }
-
-
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -220,5 +214,4 @@ public class Robot extends LoggedRobot {
   public void simulationPeriodic() {
     m_robotContainer.updateSimulation();
   }
-  
 }

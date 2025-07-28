@@ -16,11 +16,12 @@ import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import team5427.frc.robot.Constants;
 import team5427.frc.robot.subsystems.intake.IntakeConstants;
+import team5427.lib.motors.MagicSteelTalonFX;
 import team5427.lib.motors.SteelTalonFX;
 
-public class IntakeIOTalonFX implements IntakeIO {
+public class IntakeIOMagicTalonFX implements IntakeIO {
   private SteelTalonFX rollerMotor;
-  private SteelTalonFX pivotMotor;
+  private MagicSteelTalonFX pivotMotor;
 
   private StatusSignal<Angle> pivotMotorPosition;
   private StatusSignal<AngularVelocity> pivotMotorAngularVelocity;
@@ -29,7 +30,7 @@ public class IntakeIOTalonFX implements IntakeIO {
   private StatusSignal<AngularVelocity> rollerMotorAngularVelocity;
   private StatusSignal<AngularAcceleration> rollerMotorAngularAcceleration;
 
-  private StatusSignal<Current> rollerMotorCurrent;
+  public StatusSignal<Current> rollerMotorCurrent;
   private StatusSignal<Current> pivotMotorCurrent;
 
   private StatusSignal<Voltage> rollerMotorVoltage;
@@ -38,9 +39,9 @@ public class IntakeIOTalonFX implements IntakeIO {
   private StatusSignal<Temperature> rollerMotorTemp;
   private StatusSignal<Temperature> pivotMotorTemp;
 
-  public IntakeIOTalonFX() {
+  public IntakeIOMagicTalonFX() {
     rollerMotor = new SteelTalonFX(IntakeConstants.kRollerCanDeviceId);
-    pivotMotor = new SteelTalonFX(IntakeConstants.kPivotCanDeviceId);
+    pivotMotor = new MagicSteelTalonFX(IntakeConstants.kPivotCanDeviceId);
 
     rollerMotor.apply(IntakeConstants.kRollerMotorConfiguration);
     pivotMotor.apply(IntakeConstants.kPivotMotorConfiguration);
