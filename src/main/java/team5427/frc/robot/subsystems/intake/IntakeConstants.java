@@ -1,7 +1,10 @@
 package team5427.frc.robot.subsystems.intake;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.LinearVelocity;
 import team5427.lib.drivers.CANDeviceId;
 import team5427.lib.drivers.ComplexGearRatio;
 import team5427.lib.motors.MotorConfiguration;
@@ -18,6 +21,9 @@ public final class IntakeConstants {
 
   public static final CANDeviceId kPivotCanDeviceId = new CANDeviceId(2);
   public static final CANDeviceId kRollerCanDeviceId = new CANDeviceId(3);
+
+  public static final double kPivotMotorSimulatedkP = 1.0;
+  public static final double kRollerMotorSimulatedkP = 1.0;
 
   static {
     kPivotMotorConfiguration.gearRatio = kPivotGearRatio;
@@ -75,7 +81,10 @@ public final class IntakeConstants {
     kRollerMotorConfiguration.kI = 0.0;
   }
 
+  public static final LinearVelocity kRollerIntakeVelocity = MetersPerSecond.of(5.0);
+  public static final LinearVelocity kRollerStowedVelocity = MetersPerSecond.of(5.0);
   public static final Rotation2d kPivotMaxRotation = Rotation2d.fromDegrees(120);
   public static final Rotation2d kPivotMinimumRotation = Rotation2d.fromDegrees(0);
   public static final Rotation2d kPivotStartingRotation = Rotation2d.fromDegrees(0);
+  public static final Rotation2d kPivotIntakeRotation = Rotation2d.fromDegrees(100);
 }

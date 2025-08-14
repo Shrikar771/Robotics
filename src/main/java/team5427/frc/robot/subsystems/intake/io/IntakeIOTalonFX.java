@@ -38,6 +38,12 @@ public class IntakeIOTalonFX implements IntakeIO {
   private StatusSignal<Temperature> rollerMotorTemp;
   private StatusSignal<Temperature> pivotMotorTemp;
 
+  private boolean isRollerMotorDisabled = false;
+  private boolean isPivotMotorDisabled = false;
+
+  public boolean pivotMotorDisabled = false;
+  public boolean rollerMotorDisabled = false;
+
   public IntakeIOTalonFX() {
     rollerMotor = new SteelTalonFX(IntakeConstants.kRollerCanDeviceId);
     pivotMotor = new SteelTalonFX(IntakeConstants.kPivotCanDeviceId);
@@ -85,6 +91,9 @@ public class IntakeIOTalonFX implements IntakeIO {
     inputs.rollerMotorConnected = rollerMotor.getTalonFX().isConnected();
     inputs.pivotMotorConnected = pivotMotor.getTalonFX().isConnected();
 
+    inputs.rollerMotorDisabled = isRollerMotorDisabled;
+    inputs.pivotMotorDisabled = isPivotMotorDisabled;
+
     BaseStatusSignal.refreshAll(pivotMotorPosition, rollerMotorAngularVelocity);
     BaseStatusSignal.refreshAll(
         rollerMotorCurrent,
@@ -117,22 +126,42 @@ public class IntakeIOTalonFX implements IntakeIO {
   }
 
   public void setPivotRotation(Rotation2d rotation) {
-    pivotMotor.setSetpoint(rotation);
+    if (isPivotMotorDisabled) {
+      pivotMotor.setSetpoint(rotation);
+    }
   }
 
   public void setRollerSpeed(LinearVelocity velocity) {
-    rollerMotor.setSetpoint(velocity);
+    if (isRollerMotorDisabled) {
+      rollerMotor.setSetpoint(velocity);
+    }
   }
 
   public void setPivotRotation(Angle rotation) {
-    pivotMotor.setSetpoint(rotation);
+    if (isPivotMotorDisabled) {
+      pivotMotor.setSetpoint(rotation);
+    }
   }
 
   public void setRollerSpeed(AngularVelocity velocity) {
-    rollerMotor.setSetpoint(velocity);
+    if (isRollerMotorDisabled) {
+      rollerMotor.setSetpoint(velocity);
+    }
   }
-  
-  public void resetPivotEncoderPosition(Rotation2d resetAngle){
-    pivotMotor.setEncoderPosition(resetAngle);
+
+  public void resetPivotEncoderPosition(Rotation2d resetAngle) {
+    if (isPivotMotorDisabled) {
+      pivotMotor.setEncoderPosition(resetAngle);
+    }
+  }
+
+  public void disableRollerMotor(boolean shouldDisable) {
+    isRollerMotorDisabled = shouldDisable;
+    if (shouldDisable) rollerMotor.setRawPercentage(0);
+  }
+
+  public void disablePivotMotor(boolean shouldDisable) {
+    isPivotMotorDisabled = shouldDisable;
+    if (shouldDisable) rollerMotor.setRawPercentage(0);
   }
 }

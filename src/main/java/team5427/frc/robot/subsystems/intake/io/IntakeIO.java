@@ -17,8 +17,6 @@ import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
-
-import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface IntakeIO {
@@ -53,6 +51,9 @@ public interface IntakeIO {
 
     public Temperature rollerMotorTemperature = Celsius.of(0.0);
     public Temperature pivotMotorTemperature = Celsius.of(0.0);
+
+    public boolean pivotMotorDisabled = false;
+    public boolean rollerMotorDisabled = false;
   }
 
   public default void updateInputs(IntakeIOInput input) {}
@@ -65,5 +66,9 @@ public interface IntakeIO {
 
   public default void setRolerSpeed(AngularVelocity velocity) {}
 
-  public default void resetPivotEncoderPosition(Rotation2d resetAngle){}
+  public default void resetPivotEncoderPosition(Rotation2d resetAngle) {}
+
+  public default void disableRollerMotor(boolean shouldDisable) {}
+
+  public default void disablePivotMotor(boolean shouldDisable) {}
 }
