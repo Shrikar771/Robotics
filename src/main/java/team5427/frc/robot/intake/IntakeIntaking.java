@@ -31,5 +31,6 @@ public class IntakeIntaking extends Command {
   public void end(boolean interrupted) {
     subsystem.setIntakingAngle(IntakeConstants.kPivotStartingRotation);
     subsystem.setIntakingSpeed(IntakeConstants.kRollerStowedVelocity);
+    subsystem.setDefaultCommand(null);
   }
 }
