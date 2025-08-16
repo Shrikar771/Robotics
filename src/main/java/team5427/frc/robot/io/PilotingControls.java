@@ -1,5 +1,7 @@
 package team5427.frc.robot.io;
 
+import com.ctre.phoenix6.mechanisms.DifferentialMechanism.DisabledReason;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -18,6 +20,7 @@ import team5427.frc.robot.subsystems.vision.io.QuestNav;
 public class PilotingControls {
   private CommandXboxController joy;
   private Trigger autonTrigger;
+  private Trigger disableTrigger;
 
   public PilotingControls() {
     joy = new CommandXboxController(DriverConstants.kDriverJoystickPort);
@@ -31,12 +34,6 @@ public class PilotingControls {
 
   /** Made private to prevent multiple calls to this method */
   private void initalizeTriggers() {
-
-    Superstructure.SwerveStates.SwerveTriggers.kDriving.onTrue(new ChassisMovement(joy));
-
-    Superstructure.SwerveStates.SwerveTriggers.kAuton.onTrue(
-        new ChassisMovement(joy)); // Dummy Command, replace with real Auton Driving Command
-
     autonTrigger =
         new Trigger(
             () -> {
@@ -53,6 +50,28 @@ public class PilotingControls {
                 () -> {
                   Superstructure.kSelectedSwerveState = SwerveStates.DRIVING;
                 }));
+    disableTrigger = new Trigger(() -> {
+      return DriverStation.isDisabled();
+    });
+    disableTrigger
+      .onTrue(new InstantCommand(
+        () -> {
+          Superstructure.kSelectedSwerveState = SwerveStates.DISABLED;
+        }
+      
+      ))
+      .negate().and(autonTrigger.negate())
+      .onFalse(new InstantCommand(
+        () -> {
+          Superstructure.kSelectedSwerveState = SwerveStates.DRIVING;
+        }
+      ));
+    Superstructure.SwerveStates.SwerveTriggers.kDriving.onTrue(new ChassisMovement(joy));
+
+    Superstructure.SwerveStates.SwerveTriggers.kAuton.onTrue(
+        new ChassisMovement(joy)); // Dummy Command, replace with real Auton Driving Command
+
+    
     // SwerveSubsystem.getInstance().setDefaultCommand(new ChassisMovement(joy));
     joy.a()
         .onTrue(

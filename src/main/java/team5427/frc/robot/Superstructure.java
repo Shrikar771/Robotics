@@ -7,7 +7,9 @@ public class Superstructure {
     DRIVING,
     AUTO_ALIGN,
     INTAKE_ASSISTANCE,
+    DISABLED,
     AUTON;
+    
 
     public static class SwerveTriggers {
       public static final Trigger kDriving =
@@ -30,10 +32,16 @@ public class Superstructure {
               () -> {
                 return kSelectedSwerveState.equals(AUTON);
               });
+
+      public static final Trigger kDisabled = 
+          new Trigger(
+            () -> {
+               return kSelectedSwerveState.equals(DISABLED);
+              });
     }
   }
 
-  public static SwerveStates kSelectedSwerveState = SwerveStates.DRIVING;
+  public static SwerveStates kSelectedSwerveState = SwerveStates.DISABLED;
 
   public static enum IntakeStates {
     INTAKING,
