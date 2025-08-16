@@ -1,7 +1,5 @@
 package team5427.frc.robot.io;
 
-import com.ctre.phoenix6.mechanisms.DifferentialMechanism.DisabledReason;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -50,28 +48,29 @@ public class PilotingControls {
                 () -> {
                   Superstructure.kSelectedSwerveState = SwerveStates.DRIVING;
                 }));
-    disableTrigger = new Trigger(() -> {
-      return DriverStation.isDisabled();
-    });
+    disableTrigger =
+        new Trigger(
+            () -> {
+              return DriverStation.isDisabled();
+            });
     disableTrigger
-      .onTrue(new InstantCommand(
-        () -> {
-          Superstructure.kSelectedSwerveState = SwerveStates.DISABLED;
-        }
-      
-      ))
-      .negate().and(autonTrigger.negate())
-      .onFalse(new InstantCommand(
-        () -> {
-          Superstructure.kSelectedSwerveState = SwerveStates.DRIVING;
-        }
-      ));
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  Superstructure.kSelectedSwerveState = SwerveStates.DISABLED;
+                }))
+        .negate()
+        .and(autonTrigger.negate())
+        .onFalse(
+            new InstantCommand(
+                () -> {
+                  Superstructure.kSelectedSwerveState = SwerveStates.DRIVING;
+                }));
     Superstructure.SwerveStates.SwerveTriggers.kDriving.onTrue(new ChassisMovement(joy));
 
     Superstructure.SwerveStates.SwerveTriggers.kAuton.onTrue(
         new ChassisMovement(joy)); // Dummy Command, replace with real Auton Driving Command
 
-    
     // SwerveSubsystem.getInstance().setDefaultCommand(new ChassisMovement(joy));
     joy.a()
         .onTrue(

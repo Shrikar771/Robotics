@@ -9,7 +9,6 @@ public class Superstructure {
     INTAKE_ASSISTANCE,
     DISABLED,
     AUTON;
-    
 
     public static class SwerveTriggers {
       public static final Trigger kDriving =
@@ -33,10 +32,10 @@ public class Superstructure {
                 return kSelectedSwerveState.equals(AUTON);
               });
 
-      public static final Trigger kDisabled = 
+      public static final Trigger kDisabled =
           new Trigger(
-            () -> {
-               return kSelectedSwerveState.equals(DISABLED);
+              () -> {
+                return kSelectedSwerveState.equals(DISABLED);
               });
     }
   }

@@ -10,7 +10,6 @@ public class IntakeIntaking extends Command {
   public IntakeIntaking() {
     subsystem = IntakeSubsystem.getInstance();
     addRequirements(subsystem);
-    
   }
 
   @Override
